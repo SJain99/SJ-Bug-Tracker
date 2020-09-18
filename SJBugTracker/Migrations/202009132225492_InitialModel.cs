@@ -23,11 +23,11 @@ namespace SJBugTracker.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Title = c.String(),
-                        Project_Id = c.Int(),
+                        ProjectId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Projects", t => t.Project_Id)
-                .Index(t => t.Project_Id);
+                .ForeignKey("dbo.Projects", t => t.ProjectId, cascadeDelete: true)
+                .Index(t => t.ProjectId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -105,14 +105,14 @@ namespace SJBugTracker.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Tickets", "Project_Id", "dbo.Projects");
+            DropForeignKey("dbo.Tickets", "ProjectId", "dbo.Projects");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Tickets", new[] { "Project_Id" });
+            DropIndex("dbo.Tickets", new[] { "ProjectId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");

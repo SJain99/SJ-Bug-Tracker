@@ -1,0 +1,44 @@
+﻿@model SJBugTracker.Models.Project
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Projects</h2>
+
+<table id="projects" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts 
+{
+    <script>
+        $(document).ready(function () {
+            $("#projects").DataTable({
+                ajax: {
+                    url: "/api/projects",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "description"
+                    },
+                    {
+                        data: "name"
+                    }
+                ]
+            });
+        })
+    </script>
+}
+
