@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data.Entity;
 
 namespace SJBugTracker.Controllers.Api
 {
@@ -21,29 +20,8 @@ namespace SJBugTracker.Controllers.Api
         }
         public IEnumerable<ProjectDto> GetProjects()
         {
-            var ticketDtos = new List<KeyValuePair<int, TicketDto>>();
-            List<ProjectDto> projectDtos = new List<ProjectDto>();
-
-            foreach (var ticket in _context.Tickets)
-                ticketDtos.Add(new KeyValuePair<int, TicketDto>(ticket.ProjectId, Mapper.Map<Ticket, TicketDto>(ticket)));
-            
-
-            foreach (var project in _context.Projects)
-            {
-                var matches = from val in ticketDtos where val.Key == project.Id select val.Value;
-                var ticketDtosList = matches.ToList();
-                var projectDto = new ProjectDto
-                {
-                    Id = project.Id,
-                    Name = project.Name,
-                    Description = project.Description,
-                    TicketDtos = ticketDtosList
-                };
-
-                projectDtos.Add(projectDto);
-            }
-
-            return projectDtos;
+            var projects = _context.Projects.ToList();
+            return Mapper.Map<List<ProjectDto>>(projects);
         }
 
         public ProjectDto GetProject(int id)
@@ -53,23 +31,7 @@ namespace SJBugTracker.Controllers.Api
             if (project == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            var ticketDtos = new List<KeyValuePair<int, TicketDto>>();
-
-            foreach (var ticket in _context.Tickets)
-                ticketDtos.Add(new KeyValuePair<int, TicketDto>(ticket.ProjectId, Mapper.Map<Ticket, TicketDto>(ticket)));
-
-            var matches = from val in ticketDtos where val.Key == project.Id select val.Value;
-            var ticketDtosList = matches.ToList();
-
-            var projectDto = new ProjectDto
-            {
-                Id = project.Id,
-                Name = project.Name,
-                Description = project.Description,
-                TicketDtos = ticketDtosList
-            };
-
-            return projectDto;
+            return Mapper.Map<ProjectDto>(project);
         }
 
         [HttpPost]
@@ -78,23 +40,7 @@ namespace SJBugTracker.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var tickets = new List<KeyValuePair<int, Ticket>>();
-
-            foreach (var ticketDto in projectDto.TicketDtos)
-            {
-                tickets.Add(new KeyValuePair<int, Ticket>(ticketDto.ProjectDto.Id, Mapper.Map<TicketDto, Ticket>(ticketDto)));
-            }
-
-            var matches = from val in tickets where val.Key == projectDto.Id select val.Value;
-            var ticketsList = matches.ToList();
-
-            var project = new Project
-            {
-                Id = projectDto.Id,
-                Name = projectDto.Name,
-                Description = projectDto.Description,
-                Tickets = ticketsList
-            };
+            var project = Mapper.Map<Project>(projectDto);
 
             _context.Projects.Add(project);
             _context.SaveChanges();
@@ -115,20 +61,7 @@ namespace SJBugTracker.Controllers.Api
             if (projectInDB == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            var tickets = new List<KeyValuePair<int, Ticket>>();
-
-            foreach (var ticketDto in projectDto.TicketDtos)
-            {
-                tickets.Add(new KeyValuePair<int, Ticket>(ticketDto.ProjectDto.Id, Mapper.Map<TicketDto, Ticket>(ticketDto)));
-            }
-
-            var matches = from val in tickets where val.Key == projectDto.Id select val.Value;
-            var ticketsList = matches.ToList();
-
-            projectInDB.Id = projectDto.Id;
-            projectInDB.Name = projectDto.Name;
-            projectInDB.Description = projectDto.Description;
-            projectInDB.Tickets = ticketsList;
+            Mapper.Map(projectDto, projectInDB);
 
             _context.SaveChanges();
         }

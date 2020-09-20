@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ProjectsController.cs" />
+    <Compile Include="Controllers\Api\TicketsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -194,6 +195,10 @@
     <Compile Include="Migrations\202009132225492_InitialModel.cs" />
     <Compile Include="Migrations\202009132225492_InitialModel.Designer.cs">
       <DependentUpon>202009132225492_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009190058592_AddDescriptionToTicket.cs" />
+    <Compile Include="Migrations\202009190058592_AddDescriptionToTicket.Designer.cs">
+      <DependentUpon>202009190058592_AddDescriptionToTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -499,6 +504,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="Views\Projects\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -519,6 +525,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009132225492_InitialModel.resx">
       <DependentUpon>202009132225492_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009190058592_AddDescriptionToTicket.resx">
+      <DependentUpon>202009190058592_AddDescriptionToTicket.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

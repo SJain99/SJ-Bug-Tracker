@@ -8,7 +8,7 @@ namespace SJBugTracker.Dtos
     public class TicketDto
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public ProjectDto ProjectDto { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

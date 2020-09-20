@@ -1,14 +1,14 @@
 ﻿@model SJBugTracker.Models.Project
 @{
-    ViewBag.Title = "Projects";
+    ViewBag.Title = "Project Details";
 }
 
-<h2>Projects</h2>
+<h2>Tickets for Project</h2>
 
-<table id="projects" class="table table-bordered table-hover">
+<table id="project-tickets" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>Project</th>
+            <th>Name</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -17,11 +17,11 @@
     </tbody>
 </table>
 
-@section scripts 
+@section scripts
 {
     <script>
         $(document).ready(function () {
-            $("#projects").DataTable({
+            $("#project-tickets").DataTable({
                 ajax: {
                     url: "/api/projects",
                     dataSrc: ""
@@ -41,4 +41,3 @@
         })
     </script>
 }
-
