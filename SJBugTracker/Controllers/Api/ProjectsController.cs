@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace SJBugTracker.Controllers.Api
@@ -20,8 +19,29 @@ namespace SJBugTracker.Controllers.Api
         }
         public IEnumerable<ProjectDto> GetProjects()
         {
-            var projects = _context.Projects.ToList();
-            return Mapper.Map<List<ProjectDto>>(projects);
+            var projects = (from p in _context.Projects
+                            select new ProjectDto()
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                Description = p.Description
+                            }).ToList();
+
+            foreach (ProjectDto projectDto in projects)
+            {
+                var tickets = from ticket in _context.Tickets
+                              where ticket.ProjectId == projectDto.Id
+                              select new TicketDto()
+                              {
+                                  Id = ticket.Id,
+                                  Name = ticket.Name,
+                                  Description = ticket.Description
+                              };
+
+                projectDto.TicketDtos = tickets.ToList();
+            }
+
+            return projects;
         }
 
         public ProjectDto GetProject(int id)
@@ -31,7 +51,20 @@ namespace SJBugTracker.Controllers.Api
             if (project == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return Mapper.Map<ProjectDto>(project);
+            var projectDto = Mapper.Map<ProjectDto>(project);
+
+            var tickets = from ticket in _context.Tickets
+                          where ticket.ProjectId == projectDto.Id
+                          select new TicketDto()
+                          {
+                              Id = ticket.Id,
+                              Name = ticket.Name,
+                              Description = ticket.Description
+                          };
+
+            projectDto.TicketDtos = tickets.ToList();
+
+            return projectDto;
         }
 
         [HttpPost]
