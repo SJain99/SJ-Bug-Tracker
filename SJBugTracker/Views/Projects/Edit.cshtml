@@ -1,0 +1,64 @@
+﻿@model SJBugTracker.ViewModels.ProjectDetailsViewModel
+@{
+    ViewBag.Title = "Edit Project";
+}
+
+<h2>Edit Project</h2>
+
+<form id="edit-project">
+    <div class="form-group">
+        <label>Project Name</label>
+        <input type="text" value="@Model.Project.Name" id="project-name" name="" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <input type="text" value="@Model.Project.Description" id="project-description" name="" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary">Update Project</button>
+</form>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+
+            var project = {
+                name: "",
+                description: "",
+                tickets: []
+            };
+
+            $("#edit-project").validate({
+                submitHandler: function () {
+                    event.preventDefault();
+
+                    project.name = $("#project-name").val();
+                    project.description = $("#project-description").val();
+
+                    for (i = 0; i < @Model.Tickets.Count; i++) {
+                        project.tickets.push(i);
+                    }
+
+                    $("#project-name").val('');
+                    $("#project-description").val('');
+
+                    $.ajax({
+                        url: "/api/projects/" + @Model.Project.Id,
+                        method: "PUT",
+                        data: project
+                    })
+                        .done(function () {
+                            toastr.success("Project successfully updated.");
+                        })
+                        .fail(function () {
+                            toastr.fail("Project update unsuccessful.");
+                        });
+                }
+            });
+        });
+    </script>
+}
+
