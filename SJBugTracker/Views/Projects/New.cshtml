@@ -37,6 +37,8 @@
 
                     project.name = $("#project-name").val();
                     project.description = $("#project-description").val();
+                    $("#project-name").val('');
+                    $("#project-description").val('');
 
                     $.ajax({
                         url: "/api/projects",
