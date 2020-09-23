@@ -38,5 +38,10 @@ namespace SJBugTracker.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult New()
+        {
+            return View();
+        }
     }
 }

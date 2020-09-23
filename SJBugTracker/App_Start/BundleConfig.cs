@@ -12,6 +12,7 @@ namespace SJBugTracker
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/bootbox.js",
+                        "~/Scripts/toastr.js",
                         "~/Scripts/DataTables/jquery.dataTables.js",
                         "~/Scripts/DataTables/dataTables.bootstrap.js"));
 
@@ -26,6 +27,7 @@ namespace SJBugTracker
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-journal.css",
                       "~/Content/site.css",
+                      "~/Content/toastr.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.css"));
         }
     }
