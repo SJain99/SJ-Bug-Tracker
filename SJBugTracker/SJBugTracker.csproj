@@ -303,6 +303,7 @@
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Dtos\ProjectDto.cs" />
     <Compile Include="Dtos\TicketDto.cs" />
+    <Compile Include="Dtos\TicketPriorityDto.cs" />
     <Compile Include="Dtos\TicketTypeDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -323,12 +324,21 @@
     <Compile Include="Migrations\202009250528120_PopulateTicketTypes.Designer.cs">
       <DependentUpon>202009250528120_PopulateTicketTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009252013487_AddTicketPriorityToTicket.cs" />
+    <Compile Include="Migrations\202009252013487_AddTicketPriorityToTicket.Designer.cs">
+      <DependentUpon>202009252013487_AddTicketPriorityToTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009252015576_PopulateTicketPriorities.cs" />
+    <Compile Include="Migrations\202009252015576_PopulateTicketPriorities.Designer.cs">
+      <DependentUpon>202009252015576_PopulateTicketPriorities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketPriority.cs" />
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -669,6 +679,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009250528120_PopulateTicketTypes.resx">
       <DependentUpon>202009250528120_PopulateTicketTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009252013487_AddTicketPriorityToTicket.resx">
+      <DependentUpon>202009252013487_AddTicketPriorityToTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009252015576_PopulateTicketPriorities.resx">
+      <DependentUpon>202009252015576_PopulateTicketPriorities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

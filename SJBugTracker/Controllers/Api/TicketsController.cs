@@ -21,12 +21,12 @@ namespace SJBugTracker.Controllers.Api
         }
         public IEnumerable<TicketDto> GetTickets()
         {
-            return _context.Tickets.Include(t => t.TicketType).ToList().Select(Mapper.Map<Ticket, TicketDto>);
+            return _context.Tickets.Include(t => t.TicketType).Include(t => t.TicketPriority).ToList().Select(Mapper.Map<Ticket, TicketDto>);
         }
 
         public TicketDto GetTicket(int id)
         {
-            var ticket = _context.Tickets.Include(t => t.TicketType).SingleOrDefault(t => t.Id == id);
+            var ticket = _context.Tickets.Include(t => t.TicketType).Include(t => t.TicketPriority).SingleOrDefault(t => t.Id == id);
 
             if (ticket == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);

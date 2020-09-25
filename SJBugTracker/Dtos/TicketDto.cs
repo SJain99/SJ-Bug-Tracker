@@ -13,5 +13,7 @@ namespace SJBugTracker.Dtos
         public int ProjectId { get; set; }
         public int TicketTypeId { get; set; }
         public TicketTypeDto TicketType { get; set; }
+        public int TicketPriorityId { get; set; }
+        public TicketPriorityDto TicketPriority { get; set; }
     }
 }
