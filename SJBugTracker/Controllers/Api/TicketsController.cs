@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace SJBugTracker.Controllers.Api
 {
@@ -20,34 +21,17 @@ namespace SJBugTracker.Controllers.Api
         }
         public IEnumerable<TicketDto> GetTickets()
         {
-            var tickets = (from t in _context.Tickets
-                            select new TicketDto()
-                            {
-                                Id = t.Id,
-                                Name = t.Name,
-                                Description = t.Description,
-                                ProjectDtoId = t.ProjectId
-                            }).ToList();
-
-            return tickets;
+            return _context.Tickets.Include(t => t.TicketType).ToList().Select(Mapper.Map<Ticket, TicketDto>);
         }
 
         public TicketDto GetTicket(int id)
         {
-            var ticket = _context.Tickets.SingleOrDefault(t => t.Id == id);
+            var ticket = _context.Tickets.Include(t => t.TicketType).SingleOrDefault(t => t.Id == id);
 
             if (ticket == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            var ticketDto = new TicketDto()
-            {
-                Id = ticket.Id,
-                Name = ticket.Name,
-                Description = ticket.Description,
-                ProjectDtoId = ticket.ProjectId
-            };
-
-            return ticketDto;
+            return Mapper.Map<TicketDto>(ticket);
         }
 
         [HttpPost]
@@ -58,7 +42,7 @@ namespace SJBugTracker.Controllers.Api
 
             var ticket = Mapper.Map<Ticket>(ticketDto);
 
-            ticket.ProjectId = ticketDto.ProjectDtoId;
+            ticket.ProjectId = ticketDto.ProjectId;
 
             _context.Tickets.Add(ticket);
             _context.SaveChanges();

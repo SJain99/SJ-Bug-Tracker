@@ -7,5 +7,7 @@
         public string Description { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public int TicketTypeId { get; set; }
+        public TicketType TicketType { get; set; }
     }
 }
