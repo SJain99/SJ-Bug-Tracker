@@ -1,0 +1,76 @@
+﻿@model SJBugTracker.Models.Ticket
+@{
+    ViewBag.Title = "Tickets";
+}
+
+<h2>Tickets</h2>
+
+<button class="btn btn-primary" onclick="document.location='/Tickets/New'">Create New Ticket</button>
+
+<br />
+<br />
+
+<table id="tickets" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Ticket</th>
+            <th>Project</th>
+            <th>Ticket Priority</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var dataTable = $("#tickets").DataTable({
+                ajax: {
+                    url: "/api/tickets",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "project.name"
+                    },
+                    {
+                        data: "ticketPriority.name"
+                    },
+                    {
+                        data: "description"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, ticket) {
+                            return "<button class='btn-link' onclick=\"document.location='/Tickets/Edit/" + ticket.id + "'\">Edit</button>" + "<text>|</text>" + "<button class='btn-link js-delete' data-ticket-id=" + ticket.id + ">Delete</button>"
+                        }
+                    }
+                ]
+            });
+
+            $("#tickets").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this ticket?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/tickets/" + button.attr("data-ticket-id"),
+                            method: "DELETE",
+                            success: function () {
+                                dataTable.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+
