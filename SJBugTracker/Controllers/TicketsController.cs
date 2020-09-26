@@ -34,5 +34,22 @@ namespace SJBugTracker.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult Edit(int id)
+        {
+            var ticket = _context.Tickets.SingleOrDefault(t => t.Id == id);
+            var projectId = ticket.ProjectId;
+            var project = _context.Projects.SingleOrDefault(p => p.Id == projectId);
+
+            var viewModel = new EditTicketViewModel
+            {
+                Project = project,
+                Ticket = ticket,
+                TicketTypes = _context.TicketTypes.ToList(),
+                TicketPriorities = _context.TicketPriorities.ToList()
+            };
+
+            return View(viewModel);
+        }
     }
 }
