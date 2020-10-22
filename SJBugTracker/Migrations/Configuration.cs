@@ -1,5 +1,8 @@
 namespace SJBugTracker.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using SJBugTracker.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
