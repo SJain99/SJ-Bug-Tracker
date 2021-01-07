@@ -1,0 +1,43 @@
+﻿@model SJBugTracker.ViewModels.RoleManagementViewModel
+@{
+    ViewBag.Title = "Role Management";
+}
+
+    <br />
+
+@Html.ActionLink("< Back to Users List", "Index", "Admin", null, null)
+
+<h2>Update Roles for User: @Model.User.UserName</h2>
+
+<div class="row">
+    <div class="container">
+        <div class="col-md-6">
+            @using (Html.BeginForm("ManageRole", "Admin"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Action)
+                    @Html.DropDownListFor(m => m.Action, new SelectList(Model.Actions), "Select desired action for role", new { @class = "form-control", @required = "required" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserId)
+                    @Html.TextBoxFor(m => m.UserId, new { @Value = @Model.User.Id, @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Role)
+                    @Html.DropDownListFor(m => m.Role, new SelectList(Model.Roles, "Name", "Name"), "Select the role to update", new { @class = "form-control", @required = "required" })
+                </div>
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-primary">Update Roles</button>
+            }
+        </div>
+        <div class="col-md-6">
+            <h4>Current roles assigned to this user:</h4>
+            <ul>
+                @foreach (var role in Model.User.Roles)
+                {
+                    <li>@Model.Roles.SingleOrDefault(r => r.Id == role.RoleId).Name</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

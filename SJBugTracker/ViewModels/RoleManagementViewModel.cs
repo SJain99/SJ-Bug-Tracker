@@ -7,10 +7,13 @@ using System.Web;
 
 namespace SJBugTracker.ViewModels
 {
-    public class RoleAssignmentViewModel
+    public class RoleManagementViewModel
     {
         public ApplicationUser User { get; set; }
         public List<IdentityRole> Roles { get; set; }
-        public IdentityUserRole UserRole { get; set; }
+        public string UserId { get; set; }
+        public string Role { get; set; }
+        public List<string> Actions { get; set; }
+        public string Action { get; set; }
     }
 }

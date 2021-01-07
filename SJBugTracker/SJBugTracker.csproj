@@ -364,7 +364,7 @@
     <Compile Include="ViewModels\EditTicketViewModel.cs" />
     <Compile Include="ViewModels\NewTicketViewModel.cs" />
     <Compile Include="ViewModels\ProjectDetailsViewModel.cs" />
-    <Compile Include="ViewModels\RoleAssignmentViewModel.cs" />
+    <Compile Include="ViewModels\RoleManagementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-journal.css" />
@@ -676,7 +676,7 @@
     <Content Include="Views\Tickets\New.cshtml" />
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\RoleAssignment.cshtml" />
+    <Content Include="Views\Admin\RoleManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
