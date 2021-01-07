@@ -1,0 +1,48 @@
+﻿@model SJBugTracker.ViewModels.AdminIndexViewModel
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Users in Database</h2>
+
+<table id="users" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            string str = "";
+        }
+        @foreach(var user in Model.Users)
+        { 
+            str = "";
+            <tr>
+                <td>@user.UserName</td>
+                @foreach(var role in user.Roles)
+                {
+                    var roleName = Model.Roles.SingleOrDefault(r => r.Id == role.RoleId).Name;
+                    str = (str == "") ? roleName : str + ", " + roleName;
+                }
+                <td>@str</td>
+                <td>
+                    <p>
+                        @Html.ActionLink("Assign Role", "RoleAssignment", "Admin", new { id = user.Id }, null)
+                    </p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var dataTable = $("#users").DataTable({});
+        });
+    </script>    
+}

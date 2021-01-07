@@ -1,0 +1,40 @@
+﻿@model SJBugTracker.ViewModels.RoleAssignmentViewModel
+@{
+    ViewBag.Title = "Role Assignment";
+}
+
+    <br />
+
+@Html.ActionLink("< Back to Users List", "Index", "Admin", null, null)
+
+<h2>Assign Role to User: @Model.User.UserName</h2>
+
+<div class="row">
+    <div class="container">
+        <div class="col-md-6">
+            <h4>New role to assign to this user:</h4>
+            @using (Html.BeginForm("AssignRole", "Admin"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserRole.UserId)
+                    @Html.TextBoxFor(m => m.UserRole.UserId, new { @Value = @Model.User.Id, @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserRole.RoleId)
+                    @Html.DropDownListFor(m => m.UserRole.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select the role to assign", new { @class = "form-control", @required = "required" })
+                </div>
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-primary">Assign Role</button>
+            }
+        </div>
+        <div class="col-md-6">
+            <h4>Current roles assigned to this user:</h4>
+            <ul>
+                @foreach (var role in Model.User.Roles)
+                {
+                    <li>@Model.Roles.SingleOrDefault(r => r.Id == role.RoleId).Name</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
