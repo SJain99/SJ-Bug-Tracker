@@ -96,9 +96,17 @@ namespace SJBugTracker.Controllers
         public async Task<ActionResult> AssignRole(RoleManagementViewModel viewModel)
         {
             var isInRole = await UserManager.IsInRoleAsync(viewModel.UserId, viewModel.Role);
+            var isUnassigned = await UserManager.IsInRoleAsync(viewModel.UserId, "Unassigned");
 
             if (isInRole)
                 return RedirectToAction("Index");
+
+            if(isUnassigned)
+            {
+                await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
+                await UserManager.RemoveFromRoleAsync(viewModel.UserId, "Unassigned");
+                return RedirectToAction("Index");
+            }
 
             await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
 
@@ -109,8 +117,9 @@ namespace SJBugTracker.Controllers
         public async Task<ActionResult> RemoveRole(RoleManagementViewModel viewModel)
         {
             var isInRole = await UserManager.IsInRoleAsync(viewModel.UserId, viewModel.Role);
+            var userRoles = await UserManager.GetRolesAsync(viewModel.UserId);
 
-            if (!isInRole || viewModel.Role == "Admin")
+            if (!isInRole || viewModel.Role == "Admin" || userRoles.Count <= 1)
                 return RedirectToAction("Index");
 
             await UserManager.RemoveFromRoleAsync(viewModel.UserId, viewModel.Role);
