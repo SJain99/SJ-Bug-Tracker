@@ -126,5 +126,15 @@ namespace SJBugTracker.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpDelete]
+        public async Task DeleteUser(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            var isAdmin = await UserManager.IsInRoleAsync(id, "Admin");
+
+            if (user != null && !isAdmin)
+                await UserManager.DeleteAsync(user);
+        }
     }
 }

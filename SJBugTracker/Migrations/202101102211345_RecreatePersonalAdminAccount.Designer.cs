@@ -7,13 +7,13 @@ namespace SJBugTracker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class FixUserNameError : IMigrationMetadata
+    public sealed partial class RecreatePersonalAdminAccount : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FixUserNameError));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RecreatePersonalAdminAccount));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101082355410_FixUserNameError"; }
+            get { return "202101102211345_RecreatePersonalAdminAccount"; }
         }
         
         string IMigrationMetadata.Source
