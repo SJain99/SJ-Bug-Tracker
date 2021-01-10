@@ -93,41 +93,39 @@ namespace SJBugTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AssignRole(RoleManagementViewModel viewModel)
+        public async Task AssignRole(RoleManagementViewModel viewModel)
         {
             var isInRole = await UserManager.IsInRoleAsync(viewModel.UserId, viewModel.Role);
             var isUnassigned = await UserManager.IsInRoleAsync(viewModel.UserId, "Unassigned");
 
             if (isInRole)
-                return RedirectToAction("Index");
+                RedirectToAction("Index");
 
             if(isUnassigned)
             {
                 await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
                 await UserManager.RemoveFromRoleAsync(viewModel.UserId, "Unassigned");
-                return RedirectToAction("Index");
+                RedirectToAction("Index");
             }
 
             await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
-
-            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<ActionResult> RemoveRole(RoleManagementViewModel viewModel)
+        public async Task RemoveRole(RoleManagementViewModel viewModel)
         {
             var isInRole = await UserManager.IsInRoleAsync(viewModel.UserId, viewModel.Role);
             var userRoles = await UserManager.GetRolesAsync(viewModel.UserId);
 
-            if (!isInRole || viewModel.Role == "Admin" || userRoles.Count <= 1)
-                return RedirectToAction("Index");
-
-            await UserManager.RemoveFromRoleAsync(viewModel.UserId, viewModel.Role);
-
-            return RedirectToAction("Index");
+            if (!isInRole || userRoles.Count <= 1)
+            {
+                RedirectToAction("Index");
+            } else
+            {
+                await UserManager.RemoveFromRoleAsync(viewModel.UserId, viewModel.Role);
+            }
         }
 
-        [HttpDelete]
         public async Task DeleteUser(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
@@ -135,6 +133,7 @@ namespace SJBugTracker.Controllers
 
             if (user != null && !isAdmin)
                 await UserManager.DeleteAsync(user);
+            throw new Exception();
         }
     }
 }

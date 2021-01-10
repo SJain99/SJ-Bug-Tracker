@@ -350,9 +350,9 @@
     <Compile Include="Migrations\202101082000033_CreateUnassignedRoleForNewUsers.Designer.cs">
       <DependentUpon>202101082000033_CreateUnassignedRoleForNewUsers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202101102211345_RecreatePersonalAdminAccount.cs" />
-    <Compile Include="Migrations\202101102211345_RecreatePersonalAdminAccount.Designer.cs">
-      <DependentUpon>202101102211345_RecreatePersonalAdminAccount.cs</DependentUpon>
+    <Compile Include="Migrations\202101102350512_RecreatePersonalAdminAccount.cs" />
+    <Compile Include="Migrations\202101102350512_RecreatePersonalAdminAccount.Designer.cs">
+      <DependentUpon>202101102350512_RecreatePersonalAdminAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -729,8 +729,8 @@
     <EmbeddedResource Include="Migrations\202101082000033_CreateUnassignedRoleForNewUsers.resx">
       <DependentUpon>202101082000033_CreateUnassignedRoleForNewUsers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101102211345_RecreatePersonalAdminAccount.resx">
-      <DependentUpon>202101102211345_RecreatePersonalAdminAccount.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101102350512_RecreatePersonalAdminAccount.resx">
+      <DependentUpon>202101102350512_RecreatePersonalAdminAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
