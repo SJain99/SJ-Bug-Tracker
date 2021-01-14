@@ -1,0 +1,73 @@
+﻿@model SJBugTracker.ViewModels.ProjectAssignmentViewModel
+@{
+    ViewBag.Title = "Project User Management";
+}
+
+<br />
+
+@Html.ActionLink("< Back to Project List", "Index", "Projects", null, null)
+
+
+<h2>Update User Assignment to Project: @Model.Project.Name</h2>
+
+<div class="row">
+    <div class="container">
+        <div class="col-md-8">
+            <h3>Users in Database</h3>
+            <table id="users" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Roles</th>
+                        <th>Projects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        string str = "";
+                    }
+                    @foreach (var user in Model.Users)
+                    {
+                        str = "";
+                        <tr>
+                            <td>@user.UserName</td>
+                            @foreach (var role in user.Roles)
+                            {
+                                var roleName = Model.Roles.SingleOrDefault(r => r.Id == role.RoleId).Name;
+                                str = (str == "") ? roleName : str + ", " + roleName;
+                            }
+                            <td>@str</td>
+                            <td>@String.Join(", ", user.Projects.Select(p => p.Name))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h3>Project Assignment</h3>
+            @using (Html.BeginForm("ManageProject", "Projects"))
+            {
+                @Html.HiddenFor(m => m.ProjectId, new { @Value = Model.Project.Id })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Action)
+                    @Html.DropDownListFor(m => m.Action, new SelectList(Model.Actions), "Select desired action for role", new { @class = "form-control", @required = "required" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SelectedUsers)
+                    @Html.ListBoxFor(m => m.SelectedUsers, new SelectList(Model.Users, "Id", "UserName"), new { @class = "form-control", @required = "required" })
+                </div>
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-primary">Update Project Assignment</button>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var dataTable = $("#users").DataTable({});
+        });
+    </script>
+}

@@ -44,7 +44,11 @@
                     {
                         data: "id",
                         render: function (data, type, project) {
-                            return "<button class='btn-link' onclick=\"document.location='/Projects/Edit/" + project.id + "'\">Edit</button>" + "<text>|</text>" + "<button class='btn-link js-delete' data-project-id=" + project.id + ">Delete</button>"
+                            return "<button class='btn-link' onclick=\"document.location='/Projects/Edit/" + project.id +
+                                "'\">Edit</button>" + "<text>|</text>" + "<button class='btn-link js-delete' data-project-id=" +
+                                project.id + ">Delete</button>" + "<text>|</text>" +
+                                "<button class='btn-link' onclick=\"document.location='/Projects/UserManagement/" + project.id +
+                                "'\">Manage Users</button>"
                         }
                     }
                 ]
