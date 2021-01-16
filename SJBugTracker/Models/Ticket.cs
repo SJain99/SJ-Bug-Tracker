@@ -18,5 +18,8 @@ namespace SJBugTracker.Models
         [Required]
         public int TicketPriorityId { get; set; }
         public TicketPriority TicketPriority { get; set; }
+        [Required]
+        public int TicketStatusId { get; set; }
+        public TicketStatus TicketStatus { get; set; }
     }
 }

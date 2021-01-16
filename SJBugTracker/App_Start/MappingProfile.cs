@@ -20,6 +20,8 @@ namespace SJBugTracker.App_Start
             Mapper.CreateMap<TicketTypeDto, TicketType>().ForMember(m => m.Id, opt => opt.Ignore());
             Mapper.CreateMap<TicketPriority, TicketPriorityDto>();
             Mapper.CreateMap<TicketPriorityDto, TicketPriority>().ForMember(m => m.Id, opt => opt.Ignore());
+            Mapper.CreateMap<TicketStatus, TicketStatusDto>();
+            Mapper.CreateMap<TicketStatusDto, TicketStatus>().ForMember(m => m.Id, opt => opt.Ignore());
         }
     }
 }

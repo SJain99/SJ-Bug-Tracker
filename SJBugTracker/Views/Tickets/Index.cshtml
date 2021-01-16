@@ -13,9 +13,10 @@
 <table id="tickets" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>Ticket</th>
+            <th>Name</th>
             <th>Project</th>
-            <th>Ticket Priority</th>
+            <th>Priority</th>
+            <th>Status</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -42,6 +43,9 @@
                     },
                     {
                         data: "ticketPriority.name"
+                    },
+                    {
+                        data: "ticketStatus.name"
                     },
                     {
                         data: "description"

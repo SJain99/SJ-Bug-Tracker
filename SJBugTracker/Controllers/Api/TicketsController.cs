@@ -24,6 +24,7 @@ namespace SJBugTracker.Controllers.Api
             return _context.Tickets.Include(t => t.Project)
                 .Include(t => t.TicketType)
                 .Include(t => t.TicketPriority)
+                .Include(t => t.TicketStatus)
                 .ToList()
                 .Select(Mapper.Map<Ticket, TicketDto>);
         }
@@ -33,6 +34,7 @@ namespace SJBugTracker.Controllers.Api
             var ticket = _context.Tickets.Include(t => t.Project)
                 .Include(t => t.TicketType)
                 .Include(t => t.TicketPriority)
+                .Include(t => t.TicketStatus)
                 .SingleOrDefault(t => t.Id == id);
 
             if (ticket == null)
@@ -58,7 +60,7 @@ namespace SJBugTracker.Controllers.Api
         }
 
         [HttpPut]
-        public void UpdateProject(int id, TicketDto ticketDto)
+        public void UpdateTicket(int id, TicketDto ticketDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -74,7 +76,7 @@ namespace SJBugTracker.Controllers.Api
         }
 
         [HttpDelete]
-        public void DeleteProject(int id)
+        public void DeleteTicket(int id)
         {
             var ticketInDb = _context.Tickets.SingleOrDefault(t => t.Id == id);
 
