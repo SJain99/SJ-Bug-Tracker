@@ -12,22 +12,15 @@
 <div class="row">
     <div class="container">
         <div class="col-md-6">
-            @using (Html.BeginForm("ManageRole", "Admin"))
+            @using (Html.BeginForm("UpdateRole", "Admin"))
             {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Action)
-                    @Html.DropDownListFor(m => m.Action, new SelectList(Model.Actions), "Select desired action for role", new { @class = "form-control", @required = "required" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.UserId)
-                    @Html.TextBoxFor(m => m.UserId, new { @Value = @Model.User.Id, @class = "form-control", @readonly = "readonly" })
-                </div>
+                @Html.HiddenFor(m => m.UserId, new { @Value = Model.User.Id })
                 <div class="form-group">
                     @Html.LabelFor(m => m.Role)
                     @Html.DropDownListFor(m => m.Role, new SelectList(Model.Roles.Where(r => r.Name != "Unassigned" && r.Name != "Admin"), "Name", "Name"), "Select the role to update", new { @class = "form-control", @required = "required" })
                 </div>
                 @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-primary">Update Roles</button>
+                <button type="submit" class="btn btn-primary">Update Role</button>
             }
         </div>
         <div class="col-md-6">

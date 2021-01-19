@@ -55,17 +55,11 @@ namespace SJBugTracker.Controllers
 
         public ActionResult RoleManagement(string id)
         {
-            var actions = new List<string>
-            {
-                "Assign",
-                "Remove"
-            };
 
             var viewModel = new RoleManagementViewModel
             {
                 User = _context.Users.Include(u => u.Roles).SingleOrDefault(u => u.Id == id),
-                Roles = _context.Roles.ToList(),
-                Actions = actions
+                Roles = _context.Roles.ToList()
             };
 
             return View(viewModel);
@@ -73,57 +67,24 @@ namespace SJBugTracker.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> ManageRole(RoleManagementViewModel viewModel)
+        public async Task<ActionResult> UpdateRole(RoleManagementViewModel viewModel)
         {
             if(!ModelState.IsValid)
-            {
                 return RedirectToAction("Index");
-            }
 
-            if (viewModel.Action == "Assign")
-            {
-                await AssignRole(viewModel);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                await RemoveRole(viewModel);
-                return RedirectToAction("Index");
-            }
-        }
-
-        [HttpPost]
-        public async Task AssignRole(RoleManagementViewModel viewModel)
-        {
-            var isInRole = await UserManager.IsInRoleAsync(viewModel.UserId, viewModel.Role);
-            var isUnassigned = await UserManager.IsInRoleAsync(viewModel.UserId, "Unassigned");
-
-            if (isInRole)
-                RedirectToAction("Index");
-
-            if(isUnassigned)
-            {
-                await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
-                await UserManager.RemoveFromRoleAsync(viewModel.UserId, "Unassigned");
-                RedirectToAction("Index");
-            }
-
-            await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
-        }
-
-        [HttpPost]
-        public async Task RemoveRole(RoleManagementViewModel viewModel)
-        {
             var isInRole = await UserManager.IsInRoleAsync(viewModel.UserId, viewModel.Role);
             var userRoles = await UserManager.GetRolesAsync(viewModel.UserId);
 
-            if (!isInRole || userRoles.Count <= 1)
+            if (isInRole || userRoles.Contains("Admin"))
+                return RedirectToAction("Index");
+
+            foreach (var role in userRoles)
             {
-                RedirectToAction("Index");
-            } else
-            {
-                await UserManager.RemoveFromRoleAsync(viewModel.UserId, viewModel.Role);
+                await UserManager.RemoveFromRoleAsync(viewModel.UserId, role);
             }
+
+            await UserManager.AddToRoleAsync(viewModel.UserId, viewModel.Role);
+            return RedirectToAction("Index");
         }
 
         public async Task DeleteUser(string id)
