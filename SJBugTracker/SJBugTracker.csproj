@@ -363,6 +363,10 @@
     <Compile Include="Migrations\202101162228345_PopulateTicketStatus.Designer.cs">
       <DependentUpon>202101162228345_PopulateTicketStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101232136338_ApplicationUserTicketManyToMany.cs" />
+    <Compile Include="Migrations\202101232136338_ApplicationUserTicketManyToMany.Designer.cs">
+      <DependentUpon>202101232136338_ApplicationUserTicketManyToMany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -749,6 +753,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101162228345_PopulateTicketStatus.resx">
       <DependentUpon>202101162228345_PopulateTicketStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101232136338_ApplicationUserTicketManyToMany.resx">
+      <DependentUpon>202101232136338_ApplicationUserTicketManyToMany.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

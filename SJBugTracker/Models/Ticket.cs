@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SJBugTracker.Models
 {
@@ -21,5 +22,6 @@ namespace SJBugTracker.Models
         [Required]
         public int TicketStatusId { get; set; }
         public TicketStatus TicketStatus { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }
