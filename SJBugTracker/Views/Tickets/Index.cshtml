@@ -53,7 +53,11 @@
                     {
                         data: "id",
                         render: function (data, type, ticket) {
-                            return "<button class='btn-link' onclick=\"document.location='/Tickets/Edit/" + ticket.id + "'\">Edit</button>" + "<text>|</text>" + "<button class='btn-link js-delete' data-ticket-id=" + ticket.id + ">Delete</button>"
+                            return "<button class='btn-link' onclick=\"document.location='/Tickets/Edit/" +
+                                ticket.id + "'\">Edit</button>" + "<text>|</text>" + "<button class='btn-link js-delete' data-ticket-id=" +
+                                ticket.id + ">Delete</button>" + "<text>|</text>" +
+                                "<button class='btn-link' onclick=\"document.location='/Tickets/UserManagement/" + ticket.id +
+                                "'\">Manage Users</button>"
                         }
                     }
                 ]
